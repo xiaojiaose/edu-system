@@ -10,5 +10,5 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    const PAGE_SIZE = 30;
+    const PAGE_SIZE = 10;
 }

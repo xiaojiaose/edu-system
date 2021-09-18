@@ -5,22 +5,20 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Controller;
-use App\Student;
 use App\StudentFollow;
 use App\Subscribe;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
-    // 被关注的学生列表
+    // 哪些学生关注了老师
     public function subscribe(Request $request)
     {
         $pageNum = (int)$request->query('pageNum');
-        $page = $pageNum - 1;
-        $page = $page > 0 ? self::PAGE_SIZE * $page : 0;
-        $limit = self::PAGE_SIZE * $page;
+        $page = $pageNum > 0 ? $pageNum : 1;
+        $offset = self::PAGE_SIZE * ($page - 1);
 
-        $studentIds = Subscribe::whereTeacherId($request->user()->id)->offset($page)->limit($limit)
+        $studentIds = Subscribe::whereTeacherId($request->user()->id)->offset($offset)->limit(self::PAGE_SIZE)
             ->pluck('student_id', 'id');
         dd($studentIds);
 

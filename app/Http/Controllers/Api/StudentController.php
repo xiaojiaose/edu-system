@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Payload\ErrorMessage;
 use App\Http\Controllers\Api\Payload\ToDto;
 use App\Http\Controllers\Controller;
 use App\School;
+use App\SchoolTeacher;
 use App\Subscribe;
 use App\Teacher;
 use Illuminate\Http\Request;
@@ -18,18 +19,17 @@ class StudentController extends Controller
     public function subscribeList(Request $request)
     {
         $pageNum = (int)$request->query('pageNum');
-        $page = $pageNum - 1;
-        $page = $page > 0 ? self::PAGE_SIZE * $page : 0;
-        $limit = self::PAGE_SIZE * $page;
+
+        $page = $pageNum > 0 ? $pageNum : 1;
+        $offset = self::PAGE_SIZE * ($page - 1);
 
         $teacherIds = Subscribe::query()
             ->whereStudentId($request->user()->id)
-            ->offset($page)->limit($limit)
+            ->offset($offset)->limit(self::PAGE_SIZE)
             ->pluck('teacher_id', 'id');
         $teachers = Teacher::query()
             ->findMany($teacherIds, ['id', 'name', 'email', 'created_at'])
-            ->keyBy('id')
-            ->all();
+            ->keyBy('id');
 
         return ToDto::teachersList($teachers);
 
@@ -45,7 +45,7 @@ class StudentController extends Controller
     }
 
     // 取消关注
-    public function unsubscribe(int $teacherId, Request $request)
+    public function deleteSubscribe(int $teacherId, Request $request)
     {
         Subscribe::where([
             'student_id' => $request->user()->id,
@@ -65,8 +65,23 @@ class StudentController extends Controller
         ];
     }
 
+    // 学生学校的老师们
     public function teachers(Request $request)
     {
+        $student = $request->user();
+        if (!$schoolId = $student->school_id) {
+            throw new ErrorMessage('查询失败');
+        }
+
+        $teacherIds = SchoolTeacher::whereSchoolId($schoolId)->pluck('teacher_id')->all();
+        if (!$teacherIds) {
+            return ['items' => []];
+        }
+        $teachers = Teacher::findMany($teacherIds);
+
+        $subscribeTeacherIds = Subscribe::whereStudentId($student->id)->pluck('teacher_id')->all();
+
+        return ToDto::teachersList($teachers, $subscribeTeacherIds);
 
     }
 

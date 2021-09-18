@@ -39,13 +39,14 @@ Route::middleware('auth:api')->group(function () {
 
     });
 
-    Route::middleware(IdentityFilter::class)->group(function () {
+    Route::middleware(IdentityFilter::class. ":" . \App\Student::class)->group(function () {
         Route::get('/students/school', 'Api\StudentController@schoolInfo');
-        //学生的老师们
+        // 学生学校的老师们
         Route::get('/students/teachers', 'Api\StudentController@teachers');
         // 学生关注老师及列表
         Route::get('/students/subscribes', 'Api\StudentController@subscribeList');
         Route::post('/students/subscribes/{teacherId}', 'Api\StudentController@subscribe');
+        Route::delete('/students/unsubscribes/{teacherId}', 'Api\StudentController@deleteSubscribe');
     });
 //
 //    Route::middleware(IdentityFilter::class)->group(function () {

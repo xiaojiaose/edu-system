@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 
 class SchoolController extends Controller
 {
-    // 老师所属学校列表
+    // 老师所在学校的列表
     public function schools(Request $request)
     {
         $user = $request->user();
@@ -26,7 +26,7 @@ class SchoolController extends Controller
             $schoolList = School::whereHas('teachers', function ($query) use ($user) {
                 $query->where('is_manager', 1)->where('teacher_id', $user->id);
             })->get()->all();
-            
+
             return ToDto::schoolList($schoolList);
         }
         //创建学校
@@ -67,6 +67,7 @@ class SchoolController extends Controller
             $student->school_id = $schoolId;
             $student->save();
         }
+        // 查询出该学校所有的学生
         if ($request->method() == Request::METHOD_GET) {
             $studentList = Student::whereSchoolId($schoolId)->whereIsStudent(1)->get()->all();
             return ToDto::studentList($studentList);

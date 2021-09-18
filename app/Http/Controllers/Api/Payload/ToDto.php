@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Payload;
 use App\School;
 use App\Student;
 use App\Teacher;
+use Illuminate\Database\Eloquent\Collection;
 
 class ToDto implements \JsonSerializable
 {
@@ -32,17 +33,20 @@ class ToDto implements \JsonSerializable
         ];
     }
 
-    static function teachersList(array $teachersList)
+    static function teachersList(Collection $teachersList, $subscribeTeacherIds = [])
     {
+
         return [
-            'items' => array_map(function (Teacher $teachers) {
+            'items' => $teachersList->map(function (Teacher $teacher) use ($subscribeTeacherIds) {
                 return [
-                    'id' => $teachers->id,
-                    'name' => $teachers->name,
+                    'id' => $teacher->id,
+                    'name' => $teacher->name,
+                    'following' => in_array($teacher->id, $subscribeTeacherIds),
                 ];
-            }, $teachersList)
+            })
         ];
     }
+
 
     public function jsonSerialize()
     {
