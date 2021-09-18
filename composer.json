@@ -7,7 +7,7 @@
     "require": {
         "php": ">=7.3.0",
         "barryvdh/laravel-ide-helper": "^2.8",
-        "encore/laravel-admin": "^1.8",
+        "encore/laravel-admin": "1.8",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/passport": "~4.0",
