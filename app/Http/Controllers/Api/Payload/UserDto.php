@@ -3,9 +3,11 @@
 
 namespace App\Http\Controllers\Api\Payload;
 
+use App\Student;
+use App\Teacher;
 use App\User;
 
-class UserVo implements \JsonSerializable
+class UserDto implements \JsonSerializable
 {
     public function __construct(User $user, string $access_token, int $expires_at)
     {
@@ -16,8 +18,8 @@ class UserVo implements \JsonSerializable
         //$this->lineBinded = $user->line_id !== '';
 
 //        SystemAdmin::checkIdentity($user) && $this->role = 'system_admin';
-//        Teacher::checkIdentity($user) && $this->role = 'teacher';
-//        Student::checkIdentity($user) && $this->role = 'student';
+        Teacher::checkRole($user) && $this->role = 'teacher';
+        Student::checkRole($user) && $this->role = 'student';
     }
     public $access_token;
     public $expires_at;
