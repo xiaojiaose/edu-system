@@ -28,8 +28,7 @@ class StudentController extends Controller
             ->offset($offset)->limit(self::PAGE_SIZE)
             ->pluck('teacher_id', 'id');
         $teachers = Teacher::query()
-            ->findMany($teacherIds, ['id', 'name', 'email', 'created_at'])
-            ->keyBy('id');
+            ->findMany($teacherIds, ['id', 'name', 'email', 'created_at']);
 
         return ToDto::teachersList($teachers);
 

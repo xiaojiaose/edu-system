@@ -14,6 +14,7 @@ use App\Student;
 use App\Teacher;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class SchoolController extends Controller
 {
@@ -24,10 +25,12 @@ class SchoolController extends Controller
         //学校列表
         if ($request->method() == Request::METHOD_GET) {
             $schoolList = School::whereHas('teachers', function ($query) use ($user) {
-                $query->where('is_manager', 1)->where('teacher_id', $user->id);
+                $query->where('teacher_id', $user->id);
             })->get()->all();
 
-            return ToDto::schoolList($schoolList);
+//            $schoolIds = $schoolList->pluck("id");
+//            SchoolTeacher::whereIn('school_id', $schoolIds)->whereIsMananger(1)
+            return ToDto::schoolList($schoolList, $user->id);
         }
         //创建学校
         if ($request->method() == Request::METHOD_POST) {
@@ -47,13 +50,12 @@ class SchoolController extends Controller
     }
 
     // 查询创建学生
-    public function students(int $schoolId, Request $request)
+    public function students(Request $request, $schoolId = null)
     {
-        if (SchoolTeacher::isManager($schoolId, $request->user()->id) === false) {
-            throw new ErrorMessage('您不是该学校管理员');
-        }
-
-        if ($request->method() == Request::METHOD_POST) {
+        if ($request->method() == Request::METHOD_POST && $schoolId) {
+            if (SchoolTeacher::isManager($schoolId, $request->user()->id) === false) {
+                throw new ErrorMessage('您不是该学校管理员');
+            }
             $this->validate($request, [
                 'name' => 'required|string',
                 'email' => 'required|email|unique:users',
@@ -69,7 +71,15 @@ class SchoolController extends Controller
         }
         // 查询出该学校所有的学生
         if ($request->method() == Request::METHOD_GET) {
-            $studentList = Student::whereSchoolId($schoolId)->whereIsStudent(1)->get()->all();
+            if ($schoolId) {
+                $studentList = Student::whereSchoolId($schoolId)->whereIsStudent(1)->get();
+            } else {
+                $managerSchools = School::whereHas('teachers', function ($query) use ($request) {
+                    $query->where("is_manager", '1')->where('teacher_id', $request->user()->id);
+                })->pluck("name","id")->toArray();
+//                dd($managerSchools);
+                $studentList = Student::whereIn('school_id', array_keys($managerSchools))->whereIsStudent(1)->get();
+            }
             return ToDto::studentList($studentList);
         }
     }

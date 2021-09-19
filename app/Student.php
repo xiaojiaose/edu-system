@@ -41,4 +41,10 @@ namespace App;
 class Student extends User
 {
     static $roleColumn = 'is_student';
+
+    public function school()
+    {
+        return $this->belongsTo(School::class, 'school_id');
+    }
+
 }

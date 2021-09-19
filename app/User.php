@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -65,9 +66,31 @@ class User extends Authenticatable
     // 多角色共有
     protected $table = 'users';
 
+    protected static $roleColumn = '';
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        if (static::$roleColumn) {
+            static::addGlobalScope('role', function (Builder $builder) {
+                $builder->where(static::$roleColumn, '>', 0);
+            });
+            static::creating(function (User $user) {
+                $user->setAttribute(static::$roleColumn, 1);
+            });
+        }
+    }
+
     public static function checkRole(User $user)
     {
         return static::$roleColumn && $user->getAttribute(static::$roleColumn) > 0;
+    }
+
+    // 自定义通知通道
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'siteMsg.' . $this->id;
     }
 
 }

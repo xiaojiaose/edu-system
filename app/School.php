@@ -44,7 +44,7 @@ class School extends Model
 
     public function managers()
     {
-        return $this->teachers()->where('is_manager', '>', 0);
+        return $this->teachers()->where('is_manager', '=', 1);
     }
 
     public function creator()

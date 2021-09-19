@@ -15,10 +15,10 @@ use Illuminate\Http\Request;
 */
 Route::post('auth/login', 'Api\AuthController@login');
 Route::post('auth/reg', 'Api\AuthController@register');
-
 Route::get('test', function (Request $request) {
     return $request->user();
 });
+
 Route::middleware('auth:api')->group(function () {
 
     Route::get('/user', function (Request $request) {
@@ -30,16 +30,15 @@ Route::middleware('auth:api')->group(function () {
         Route::any('schools', 'Api\SchoolController@schools');
         // 老师创建/查询某个学校学生
         Route::any('schools/{schoolId}/students', 'Api\SchoolController@students');
+        Route::get('teachers/students', 'Api\SchoolController@students');
         // 管理员邀请老师
         Route::post('schools/{schoolId}/invites', 'Api\SchoolController@invites');
         // 老师查看关注自己的学生
         Route::get('teachers/students/subscribe', 'Api\TeacherController@subscribe');
 
-        //Route::get('teachers', 'Api\SchoolController@list');
-
     });
 
-    Route::middleware(IdentityFilter::class. ":" . \App\Student::class)->group(function () {
+    Route::middleware(IdentityFilter::class . ":" . \App\Student::class)->group(function () {
         Route::get('/students/school', 'Api\StudentController@schoolInfo');
         // 学生学校的老师们
         Route::get('/students/teachers', 'Api\StudentController@teachers');
@@ -48,13 +47,5 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/students/subscribes/{teacherId}', 'Api\StudentController@subscribe');
         Route::delete('/students/unsubscribes/{teacherId}', 'Api\StudentController@deleteSubscribe');
     });
-//
-//    Route::middleware(IdentityFilter::class)->group(function () {
-//        // 学校
-//        Route::post('schools/student', 'Api\SchoolController@student');
-//        Route::get('schools', 'Api\SchoolController@list');
-//
-//    });
-
 
 });

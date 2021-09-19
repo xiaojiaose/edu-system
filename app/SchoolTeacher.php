@@ -40,7 +40,7 @@ class SchoolTeacher extends Model
         return self::query()
                 ->where('teacher_id', $teacherId)
                 ->where('school_id', $schoolId)
-                ->where('is_manager', '>', 0)
+                ->where('is_manager', '=', 1)
                 ->count() > 0;
     }
 }

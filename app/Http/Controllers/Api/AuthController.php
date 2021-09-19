@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Controllers\Api\Payload\ErrorMessage;
-use App\Http\Controllers\Api\Payload\UserVo;
+use App\Http\Controllers\Api\Payload\UserDto;
 use App\Http\Controllers\Controller;
 use App\Teacher;
 use App\User;
@@ -56,7 +56,7 @@ class AuthController extends Controller
         /** @var \Laravel\Passport\Token expires_at */
         $tokenResult->token->expires_at = new Carbon('+7 day');
         $tokenResult->token->save();
-        return new UserVo(
+        return new UserDto(
             $user,
             $tokenResult->accessToken,
             $tokenResult->token->expires_at->timestamp
