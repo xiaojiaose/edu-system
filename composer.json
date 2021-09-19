@@ -9,11 +9,13 @@
         "barryvdh/laravel-ide-helper": "^2.8",
         "encore/laravel-admin": "1.8",
         "fideloper/proxy": "~3.3",
+        "fruitcake/laravel-cors": "^1.0",
         "laravel/framework": "5.5.*",
         "laravel/passport": "~4.0",
         "laravel/tinker": "~1.0",
         "lcobucci/jwt": "3.3.3",
-        "paragonie/random_compat": "^2.0"
+        "paragonie/random_compat": "^2.0",
+        "pusher/pusher-php-server": "^4.1"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
