@@ -53,7 +53,8 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
-
+    // vue前台地址
+    'frontend_url' => env('APP_FRONTEND_URL', 'http://localhost/dashboard/index.html'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

@@ -35,4 +35,15 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'line' => [
+        'channel_id' => env('LINE_LOGIN_CHANNEL_ID'),
+        'channel_secret' => env('LINE_LOGIN_CHANNEL_SECRET'),
+    ],
+
+    'line-bot' => [
+        'channel_id' => env('LINE_BOT_CHANNEL_ID'),
+        'channel_secret' => env('LINE_BOT_CHANNEL_SECRET'),
+        'access_token' => env('LINE_BOT_CHANNEL_ACCESS_TOKEN'),
+    ],
+
 ];

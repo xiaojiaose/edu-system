@@ -11,6 +11,7 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/', 'IndexController@api');
+
+Route::get('line', 'LineController@redirect');
+Route::get('callback/line', 'LineController@callback');

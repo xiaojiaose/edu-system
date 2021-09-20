@@ -2,6 +2,7 @@
 
 namespace App\Admin\Actions;
 
+use App\Externals\LineService;
 use App\Notifications\SiteMsgNotify;
 use Encore\Admin\Actions\BatchAction;
 use Illuminate\Database\Eloquent\Collection;
@@ -29,11 +30,11 @@ class BatchSendMsg extends BatchAction
             }
         } else {
             // line消息
-//            if (!$lineIds = $collection->pluck('line_id')->unique()->all()) {
-//                return $this->response()->error('发送失败，所有学生均未绑定 line');
-//            }
-//            $line = new LineService();
-//            $line->multicastTextMessage($lineIds, $content);
+            if (!$lineIds = $collection->pluck('line_id')->unique()->all()) {
+                return $this->response()->error('当前选择的学生全部没有绑定line，发送失败');
+            }
+            $line = new LineService();
+            $line->multicastTextMessage($lineIds, $content);
 
         }
 
