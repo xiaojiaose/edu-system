@@ -28,11 +28,11 @@ class ToDto implements \JsonSerializable
     static function studentList(Collection $studentList)
     {
         return [
-            'items' => $studentList->map(function (Student $student){
+            'items' => $studentList->map(function (Student $student) {
                 return [
                     'id' => $student->id,
                     'name' => $student->name,
-                    'school_name' => $student->school->name,
+                    'school_name' => $student->school->name ?? '',
                 ];
             })
         ];
@@ -40,13 +40,12 @@ class ToDto implements \JsonSerializable
 
     static function teachersList(Collection $teachersList, $subscribe = false)
     {
-
         return [
             'items' => $teachersList->map(function (Teacher $teacher) use ($subscribe) {
                 return [
                     'id' => $teacher->id,
                     'name' => $teacher->name,
-                    'following' => !$subscribe ?: in_array($teacher->id, $subscribe),
+                    'following' => $subscribe === false ?: in_array($teacher->id, $subscribe),
                 ];
             })
         ];

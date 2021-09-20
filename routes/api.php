@@ -31,7 +31,6 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/teachers/students/subscribe', 'Api\TeacherController@subscribe');
         Route::post('/talk/teacher/{studentId}', 'Api\TalkMsgController@teacherTalk');
     });
-
     Route::middleware(IdentityFilter::class . ":" . \App\Student::class)->group(function () {
         Route::get('/students/school', 'Api\StudentController@schoolInfo');
         // 学生学校的老师们

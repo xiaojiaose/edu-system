@@ -21,7 +21,7 @@ class CreateSchoolTeachersTable extends Migration
             $table->unsignedInteger('teacher_id')
                 ->index()
                 ->comment('教师id');
-            $table->int('is_manager')
+            $table->smallInteger('is_manager')
                 ->default(0)
                 ->comment('1为学校管理员');
             $table->timestamps();
