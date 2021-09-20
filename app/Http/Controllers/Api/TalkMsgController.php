@@ -28,6 +28,6 @@ class TalkMsgController extends Controller
         ]);
 
         $student = $request->user();
-        ChatMsgBroadcastEvent::broadcast($student->id, $teacherId, $request->json('content'), $student);
+        ChatMsgBroadcastEvent::broadcast($teacherId, $student->id, $request->json('content'), $student);
     }
 }

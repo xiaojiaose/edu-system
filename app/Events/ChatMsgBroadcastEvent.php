@@ -24,6 +24,7 @@ class ChatMsgBroadcastEvent implements ShouldBroadcast
         $this->channel = "room.{$studentId}.{$teacherId}";
         $this->content = $content;
         $this->fromUser = $from;
+        logger("channel", [$this->channel]);
     }
 
     /**
