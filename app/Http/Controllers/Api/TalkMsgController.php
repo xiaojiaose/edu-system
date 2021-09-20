@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Events\ChatEvent;
+use App\Events\ChatMsgBroadcastEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class TalkMsgController extends Controller
         ]);
 
         $teacher = $request->user();
-        broadcast(new ChatEvent($teacher->id, $studentId, $request->json('content'), $teacher));
+        ChatMsgBroadcastEvent::broadcast($teacher->id, $studentId, $request->json('content'), $teacher);
     }
 
     public function studentTalk(int $teacherId, Request $request)
@@ -27,6 +28,6 @@ class TalkMsgController extends Controller
         ]);
 
         $student = $request->user();
-        broadcast(new ChatEvent($teacherId, $student->id, $request->json('content'), $student));
+        ChatMsgBroadcastEvent::broadcast($student->id, $teacherId, $request->json('content'), $student);
     }
 }

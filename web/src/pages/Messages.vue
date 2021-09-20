@@ -20,7 +20,7 @@
         },
         created() {
             createEcho()
-                .channel('my-channel')
+                .channel('my-channel')  // push上面的
                 .listen('', function (data) {
                     alert(JSON.stringify(data));
                     this.messages.push(JSON.stringify(data));

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Middleware\IdentityFilter;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,22 +19,17 @@ Route::post('auth/reg', 'Api\AuthController@register');
 //});
 
 Route::middleware('auth:api')->group(function () {
-//
-//    Route::any('broadcasting/auth', function (Request $request) {
-//        return $request;
-//    });
-
     Route::middleware(IdentityFilter::class . ":" . \App\Teacher::class)->group(function () {
         // 老师创建/查询学校
-        Route::any('schools', 'Api\SchoolController@schools');
+        Route::any('/schools', 'Api\SchoolController@schools');
         // 老师创建/查询某个学校学生
-        Route::any('schools/{schoolId}/students', 'Api\SchoolController@students');
-        Route::get('teachers/students', 'Api\SchoolController@students');
+        Route::any('/schools/{schoolId}/students', 'Api\SchoolController@students');
+        Route::get('/teachers/students', 'Api\SchoolController@students');
         // 管理员邀请老师
-        Route::post('schools/{schoolId}/invites', 'Api\SchoolController@invites');
+        Route::post('/schools/{schoolId}/invites', 'Api\SchoolController@invites');
         // 老师查看关注自己的学生
-        Route::get('teachers/students/subscribe', 'Api\TeacherController@subscribe');
-        Route::post('messages/teacher-talk/{studentId}', 'Api\TalkMsgController@teacherTalk');
+        Route::get('/teachers/students/subscribe', 'Api\TeacherController@subscribe');
+        Route::post('/talk/teacher/{studentId}', 'Api\TalkMsgController@teacherTalk');
     });
 
     Route::middleware(IdentityFilter::class . ":" . \App\Student::class)->group(function () {
@@ -46,7 +40,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/students/subscribes', 'Api\StudentController@subscribeList');
         Route::post('/students/subscribes/{teacherId}', 'Api\StudentController@subscribe');
         Route::delete('/students/unsubscribes/{teacherId}', 'Api\StudentController@deleteSubscribe');
-        Route::post('messages/student-talk/{teacherId}', 'Api\TalkMsgController@studentTalk');
+        Route::post('/talk/student/{teacherId}', 'Api\TalkMsgController@studentTalk');
     });
 
 });

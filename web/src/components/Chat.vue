@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import {createEcho} from "@/utils/echo";
-import {getUserInfo} from "@/utils/auth";
-import {studentTalk, teacherTalk} from "@/api/message";
+  import {createEcho} from "@/utils/echo";
+  import {getUserInfo} from "@/utils/auth";
+  import {studentTalk, teacherTalk} from "@/api/message";
 
-export default {
+  export default {
   name: "Chat",
   props: [
     'open',
