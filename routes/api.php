@@ -15,15 +15,15 @@ use Illuminate\Http\Request;
 */
 Route::post('auth/login', 'Api\AuthController@login');
 Route::post('auth/reg', 'Api\AuthController@register');
-Route::get('test', function (Request $request) {
-    return $request->user();
-});
+//Route::get('test', function (Request $request) {
+//    return $request->user();
+//});
 
 Route::middleware('auth:api')->group(function () {
-
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+//
+//    Route::any('broadcasting/auth', function (Request $request) {
+//        return $request;
+//    });
 
     Route::middleware(IdentityFilter::class . ":" . \App\Teacher::class)->group(function () {
         // 老师创建/查询学校
@@ -35,7 +35,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('schools/{schoolId}/invites', 'Api\SchoolController@invites');
         // 老师查看关注自己的学生
         Route::get('teachers/students/subscribe', 'Api\TeacherController@subscribe');
-
+        Route::post('messages/teacher-talk/{studentId}', 'Api\TalkMsgController@teacherTalk');
     });
 
     Route::middleware(IdentityFilter::class . ":" . \App\Student::class)->group(function () {
@@ -46,6 +46,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/students/subscribes', 'Api\StudentController@subscribeList');
         Route::post('/students/subscribes/{teacherId}', 'Api\StudentController@subscribe');
         Route::delete('/students/unsubscribes/{teacherId}', 'Api\StudentController@deleteSubscribe');
+        Route::post('messages/student-talk/{teacherId}', 'Api\TalkMsgController@studentTalk');
     });
 
 });

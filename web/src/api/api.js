@@ -3,13 +3,13 @@ import {getAccessToken, logout} from "@/utils/auth";
 
 export function unAuthedApi() {
     return axios.create({
-        baseURL: process.env.VUE_APP_API_URL,
+        baseURL: process.env.VUE_APP_API_URL + "/api/",
     })
 }
 
 export function authedApi() {
     const api = axios.create({
-        baseURL: process.env.VUE_APP_API_URL,
+        baseURL: process.env.VUE_APP_API_URL+ "/api/",
         headers: {
             'Authorization': 'Bearer ' + getAccessToken(),
         }

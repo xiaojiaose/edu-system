@@ -33,7 +33,7 @@ export default {
 
     if (user.role === 'student') {
       createEcho()
-          .private('students.' + user.id)
+          .private('siteMsg.' + user.id)
           .notification(notify => {
             this.notify = notify
             this.notifyOpen = true

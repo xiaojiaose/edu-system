@@ -2,9 +2,10 @@
 
 namespace App;
 
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 /**
@@ -18,11 +19,12 @@ use Laravel\Passport\HasApiTokens;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $is_student 不等于0时为学生
- * @property int $school_id 所属学校
+ * @property int $school_id  所属学校
  * @property int $is_teacher 不等于0时为老师
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
  * @property-read int|null $clients_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[]
+ *                $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
  * @property-read int|null $tokens_count
@@ -52,7 +54,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -61,7 +65,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
     // 多角色共有
     protected $table = 'users';

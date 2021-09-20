@@ -14,6 +14,7 @@ export function createEcho() {
         key: process.env.VUE_APP_PUSHER_APP_KEY,
         cluster: 'mt1',
         forceTLS: true,
+        // todo
         authEndpoint: process.env.VUE_APP_API_URL + '/broadcasting/auth',
         auth: {
             headers: {
