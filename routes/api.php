@@ -14,11 +14,17 @@ use App\Http\Middleware\IdentityFilter;
 */
 Route::post('auth/login', 'Api\AuthController@login');
 Route::post('auth/reg', 'Api\AuthController@register');
+Route::post('auth/line/login', 'Api\LineController@login');
+Route::post('auth/line/users', 'Api\LineController@users');
+
 //Route::get('test', function (Request $request) {
 //    return $request->user();
 //});
 
 Route::middleware('auth:api')->group(function () {
+    Route::post('line/bind', 'Api\LineController@bind');
+    Route::put('line/unbind', 'Api\LineController@unbind');
+
     Route::middleware(IdentityFilter::class . ":" . \App\Teacher::class)->group(function () {
         // 老师创建/查询学校
         Route::any('/schools', 'Api\SchoolController@schools');

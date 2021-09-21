@@ -15,9 +15,8 @@ class UserDto implements \JsonSerializable
         $this->name = $user->name;
         $this->access_token = $access_token;
         $this->expires_at = $expires_at;
-        //$this->lineBinded = $user->line_id !== '';
+        $this->lineBinded = $user->line_id !== '';
 
-//        SystemAdmin::checkIdentity($user) && $this->role = 'system_admin';
         Teacher::checkRole($user) && $this->role = 'teacher';
         Student::checkRole($user) && $this->role = 'student';
     }

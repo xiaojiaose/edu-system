@@ -124,7 +124,7 @@ class LineController extends Controller
         }
 
         $tokenResult = $user->createToken('Personal Access Token');
-        $tokenResult->token->expires_at = new Carbon('+1 day');
+        $tokenResult->token->expires_at = new Carbon('+7 day');
         $tokenResult->token->save();
         return new UserDto(
             $user,

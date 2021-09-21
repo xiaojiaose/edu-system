@@ -37,7 +37,9 @@ class LineService
 
     public function multicastTextMessage(array $userIds, string $content)
     {
+        \Log::info(__FUNCTION__, [$content]);
         $response = self::bot()->multicast($userIds, new TextMessageBuilder($content));
+        \Log::info(__FUNCTION__, [$response]);
         self::assertBotResponseOk($response);
     }
 

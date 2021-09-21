@@ -23,11 +23,13 @@ class LineController
             'state' => Str::random(8),
             'scope' => 'profile openid',
         ]);
+        logger(__METHOD__, [$url]);
         return redirect($url);
     }
 
     public function callback(Request $request)
     {
+        logger(__METHOD__, [$request]);
         if ($error = $request->query('error')) {
             return "{$error} " . $request->query('error_description');
         }
@@ -43,7 +45,7 @@ class LineController
             ]
         ]);
         $data = json_decode($response->getBody()->getContents(), true);
-
+        logger(__METHOD__, $data);
         return redirect(config('app.frontend_url') . "?token={$data['id_token']}#/line");
     }
 
