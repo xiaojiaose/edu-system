@@ -26,8 +26,8 @@ RUN set -eux; \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
     echo "Asia/Shanghai" >  /etc/timezone; \
     date; \
-    apk del .tz-deps
     apk add --no-cache --virtual  postgresql-dev; \
+    apk del .tz-deps
 RUN docker-php-ext-install sockets pgsql pdo_pgsql
 # 复制代码
 WORKDIR /app
