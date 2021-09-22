@@ -19,7 +19,7 @@ class LineController
         $url .= http_build_query([
             'response_type' => 'code',
             'client_id' => config('services.line.channel_id'),
-            'redirect_uri' => action('LineController@callback'),
+            'redirect_uri' => "https://edu-docker.herokuapp.com/callback/line",
             'state' => Str::random(8),
             'scope' => 'profile openid',
         ]);
