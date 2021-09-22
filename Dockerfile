@@ -22,12 +22,12 @@ RUN set -eux; \
 FROM php:7.3-cli-alpine
 # 基础配置: 配置时区
 RUN set -eux; \
-    apk add --no-cache --virtual .tz-deps tzdata; \
+    apk add --no-cache --virtual .tz-deps tzdata php7-pgsql; \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
     echo "Asia/Shanghai" >  /etc/timezone; \
     date; \
     apk del .tz-deps
-RUN docker-php-ext-install sockets pgsql pdo pdo_mysql pdo_pgsql
+RUN docker-php-ext-install sockets pgsql pdo_pgsql
 # 复制代码
 WORKDIR /app
 COPY --from=build-backend /app /app
