@@ -16,8 +16,11 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 # 安装依赖、初始化数据库、构建缓存等
 RUN set -eux; \
     composer install --ignore-platform-reqs; \
+    composer reset-database; \
     composer build; \
     php artisan storage:link
+
+
 
 FROM php:7.3-cli-alpine
 # 基础配置: 配置时区
@@ -26,9 +29,8 @@ RUN set -eux; \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
     echo "Asia/Shanghai" >  /etc/timezone; \
     date; \
-    apk add --no-cache --virtual  postgresql-dev; \
     apk del .tz-deps
-RUN docker-php-ext-install sockets pgsql pdo_pgsql
+RUN docker-php-ext-install sockets
 # 复制代码
 WORKDIR /app
 COPY --from=build-backend /app /app

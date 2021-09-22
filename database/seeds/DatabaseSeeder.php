@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        // load seeder files
+        $current = basename(__FILE__);
+        foreach (scandir(__DIR__) as $filename) {
+            if (Str::endsWith($filename, '.php') && $filename !== $current) {
+                require __DIR__ . '/' . $filename;
+            }
+        }
+
+        foreach (array_keys(require __DIR__ . '/config.php') as $seeder) {
+            $this->call($seeder);
+        }
     }
 }
