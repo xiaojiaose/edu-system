@@ -39,7 +39,7 @@ class LineController
             'form_params' => [
                 'grant_type' => 'authorization_code',
                 'code' => $request->query('code'),
-                'redirect_uri' => action('LineController@callback'),
+                'redirect_uri' => "https://edu-docker.herokuapp.com/callback/line",
                 'client_id' => config('services.line.channel_id'),
                 'client_secret' => config('services.line.channel_secret'),
             ]
