@@ -22,7 +22,7 @@ class SchoolSeeder extends Seeder
             $school = School::forceCreate([
                 'name' => $item['name'],
                 'creator_id' => $creatorId,
-                'approve_time' => $item['approve_time'] ?? 0,
+                'approve_time' => $item['approve_time'] ?? null,
             ]);
 
             $teacherIds = Teacher::whereIn('email', $item['@teachers'] ?? [])->pluck('id')->all();
@@ -34,7 +34,7 @@ class SchoolSeeder extends Seeder
                         'teacher_id' => $teacherId,
                     ],
                     [
-                        'is_manager' => in_array($teacherId, $mangerIds) ? time() : 0,
+                        'is_manager' => in_array($teacherId, $mangerIds) ? 1 : 0,
                     ]
                 );
             }
@@ -43,7 +43,7 @@ class SchoolSeeder extends Seeder
         foreach ($configs[UserSeeder::class] as $item) {
             if (isset($item['@school'])) {
                 $student = Student::whereEmail($item['email'])->first();
-                $student->student_school_id = School::whereName($item['@school'])->first()->id;
+                $student->school_id = School::whereName($item['@school'])->first()->id;
                 $student->save();
             }
         }
