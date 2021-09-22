@@ -5,7 +5,7 @@ export function loginApi(data) {
 }
 
 export function registerApi(data) {
-    return unAuthedApi().post('/auth/register', data)
+    return unAuthedApi().post('/auth/reg', data)
 }
 
 export function lineLoginUrl() {
