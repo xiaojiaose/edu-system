@@ -14,7 +14,7 @@ return [
         ['email' => 'tom.teacher@jerry.com', '@role' => 'teacher'],
         ['email' => 'tom.teacher.2@jerry.com', '@role' => 'teacher'],
         ['email' => 'tom.school@jerry.com', '@role' => 'teacher'],
-        ['email' => 'tom.system_admin@jerry.com', '@role' => 'system_admin'],
+        ['email' => 'tom.system_admin@jerry.com', '@role' => 'teacher'],
     ],
 
     SchoolSeeder::class => [
