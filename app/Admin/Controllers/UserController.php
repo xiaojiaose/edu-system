@@ -30,7 +30,6 @@ class UserController extends AdminController
         $grid->filter(function (Filter $filter) {
             $filter->scope('only-student', 'Only Student')->where('is_student', '>', 0);
             $filter->scope('only-teacher', 'Only Teacher')->where('is_teacher', '>', 0);
-            $filter->scope('only-system_admin', 'Only System Admin')->where('is_system_admin', '>', 0);
         });
 
         $grid->column('id', __('Id'));

@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             User::forceCreate([
                 'name' => explode('@', $item['email'])[0],
                 'email' => $item['email'],
-                'password' => bcrypt('secret'),
+                'password' => bcrypt('123456'),
                 "is_{$item['@role']}" => 1,
                 'line_id' => $item['line_id'] ?? '',
             ]);
