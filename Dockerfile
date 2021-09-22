@@ -27,8 +27,7 @@ RUN set -eux; \
     echo "Asia/Shanghai" >  /etc/timezone; \
     date; \
     apk del .tz-deps
-    apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS; \
-    apk add --no-cache --virtual .build-deps postgresql-dev  libstdc++ make; \
+    apk add --no-cache --virtual  postgresql-dev; \
 RUN docker-php-ext-install sockets pgsql pdo_pgsql
 # 复制代码
 WORKDIR /app
