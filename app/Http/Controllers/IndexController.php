@@ -10,6 +10,6 @@ class IndexController
 {
     public function api()
     {
-        return response("...");
+        return redirect('/dashboard/index.html');
     }
 }
