@@ -29,8 +29,11 @@ class BatchSendMsg extends BatchAction
                 $student->notify($msg);
             }
         } else {
+            $lineIds = $collection->filter(function ($student) {
+                return !empty($student->line_id);
+            })->unique()->pluck('line_id')->toArray();
             // line消息
-            if (!$lineIds = $collection->pluck('line_id')->unique()->all()) {
+            if (!$lineIds) {
                 return $this->response()->error('当前选择的学生全部没有绑定line，发送失败');
             }
             $line = new LineService();
