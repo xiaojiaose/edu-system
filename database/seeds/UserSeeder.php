@@ -2,7 +2,7 @@
 
 
 use App\Student;
-use App\StudentFollow;
+use App\Subscribe;
 use App\Teacher;
 use App\User;
 use Illuminate\Database\Seeder;
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             if ($item['@following'] ?? []) {
                 $student = Student::whereEmail($item['email'])->first();
                 foreach ($item['@following'] as $teacherEmail) {
-                    StudentFollow::firstOrCreate([
+                    Subscribe::firstOrCreate([
                         'student_id' => $student->id,
                         'teacher_id' => Teacher::whereEmail($teacherEmail)->first()->id,
                     ]);
