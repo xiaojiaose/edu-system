@@ -1,14 +1,14 @@
 # 前端构建
 FROM node:latest as build-frontend
 WORKDIR /app
-COPY front-end /app
+COPY web /app
 RUN yarn install && yarn build
 
 
 # 后端构建
 FROM php:7.3-cli-alpine as build-backend
 ENV COMPOSER_ALLOW_SUPERUSER=true
-ENV APP_ENV=production
+ENV APP_ENV=local
 # 准备代码和 composer
 WORKDIR /app
 COPY . /app
