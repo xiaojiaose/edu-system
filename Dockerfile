@@ -27,7 +27,7 @@ RUN set -eux; \
     echo "Asia/Shanghai" >  /etc/timezone; \
     date; \
     apk del .tz-deps
-RUN docker-php-ext-install sockets
+RUN docker-php-ext-install sockets pgsql  pdo_pgsql
 # 复制代码
 WORKDIR /app
 COPY --from=build-backend /app /app
