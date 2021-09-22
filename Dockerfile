@@ -15,7 +15,8 @@ COPY . /app
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 # 安装依赖、初始化数据库、构建缓存等
 RUN set -eux; \
-    apk add --no-cache --virtual postgresql-dev; \
+    apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS; \
+    apk add --no-cache --virtual .build-deps postgresql-dev  libstdc++ make; \
     composer install --ignore-platform-reqs; \
     composer build; \
     php artisan storage:link
