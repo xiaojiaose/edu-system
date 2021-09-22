@@ -23,7 +23,7 @@ return [
         [
             'name' => '复旦大学',
             '@teachers' => ['zhang-teacher@163.com'],
-            '@managers' => ['zhang-teacher@163.com'],
+            '@managers' => ['wang-school@163.com'],
             '@creator' => 'wang-school@163.com',
         ],
     ],
