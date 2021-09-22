@@ -15,6 +15,7 @@ COPY . /app
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 # 安装依赖、初始化数据库、构建缓存等
 RUN set -eux; \
+    apk add --no-cache --virtual postgresql-dev; \
     composer install --ignore-platform-reqs; \
     composer build; \
     php artisan storage:link
@@ -22,7 +23,7 @@ RUN set -eux; \
 FROM php:7.3-cli-alpine
 # 基础配置: 配置时区
 RUN set -eux; \
-    apk add --no-cache --virtual .tz-deps tzdata php7-pgsql; \
+    apk add --no-cache --virtual .tz-deps tzdata; \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
     echo "Asia/Shanghai" >  /etc/timezone; \
     date; \
