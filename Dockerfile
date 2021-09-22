@@ -8,7 +8,7 @@ RUN yarn install && yarn build
 # 后端构建
 FROM php:7.3-cli-alpine as build-backend
 ENV COMPOSER_ALLOW_SUPERUSER=true
-ENV APP_ENV=local
+ENV APP_ENV=production
 # 准备代码和 composer
 WORKDIR /app
 COPY . /app
@@ -18,8 +18,6 @@ RUN set -eux; \
     composer install --ignore-platform-reqs; \
     composer build; \
     php artisan storage:link
-
-
 
 FROM php:7.3-cli-alpine
 # 基础配置: 配置时区
