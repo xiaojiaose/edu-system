@@ -8,7 +8,7 @@
     - 更多详见 database/seeds/config.php UserSeeder 部分
 - Admin：<https://edu-docker.herokuapp.com/admin>
   - 测试账号 admin:admin
-  swagger.htm
+  
 - API Spec：[edu-system.yaml](edu-system.yaml)（完善中）**
 - swagger 文档：<https://edu-docker.herokuapp.com/swagger.htm>（完善中）**
 ## todo
