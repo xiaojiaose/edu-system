@@ -8,7 +8,7 @@
     - 更多详见 database/seeds/config.php UserSeeder 部分
 - Admin：<https://edu-docker.herokuapp.com/admin>
   - 测试账号 admin:admin
-- API Spec：<https://edu-docker.herokuapp.com/api>
+- API Spec：[edu-system.yaml](edu-system.yaml)（完善中）**
 
 ## todo
 

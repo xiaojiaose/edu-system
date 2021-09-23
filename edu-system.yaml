@@ -10,107 +10,402 @@ info:
     name: 孟德维
     email: mengdewei@gmail.com
 servers:
-  - url: 'https://test-edu-docker.herokuapp.com'
+  - url: 'https://edu-docker.herokuapp.com'
     description: 生产环境
 tags:
   - name: edu-api
-    description: 后端接口
+    description: 登录及认证相关接口
+  - name: teacher
+    description: 老师相关接口
+  - name: student
+    description: 学生相关接口
+
+
 security:
   - KeyAuth: []
 paths:
-  '/api/task':
+  '/api/auth/login':
     post:
       tags:
-        - TaskInfo
-      summary: 新建一种任务类型
-      operationId: createTask
+        - edu-api
+      summary: 登录接口
+      operationId: login
       requestBody:
-        description: 任务类型
+        description: 用户信息
         required: true
         content:
           'application/json':
             schema:
-              $ref: '#/components/schemas/Task'
-      responses:
-        '201':
-          description: 返回新建的任务类型
-          content:
-            'application/json':
-              schema:
-                $ref: '#/components/schemas/Task'
-  '/api/task/{taskId}':
-    parameters:
-      - $ref: '#/components/parameters/id'
-    get:
-      tags:
-        - TaskInfo
-      summary: 根据任务类型Id查询
-      operationId: getTask
+              $ref: '#/components/schemas/UserRegInfo'
       responses:
         '200':
-          description: 返回指定的任务类型
+          description: 成功
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Task'
-        '404':
-          description: 指定的任务类型不存在
+                $ref: '#/components/schemas/UserInfo'
+
+  '/api/auth/reg':
+    post:
+      tags:
+        - edu-api
+      summary: 注册接口
+      operationId: register
+      requestBody:
+        description: 用户信息
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/UserRegInfo'
+      responses:
+        '200':
+          description: 成功
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+
+  '/api/auth/line/login':
+    post:
+      tags:
+        - edu-api
+      summary: 使用 line id token 登陆指定用户
+      operationId: lineLogin
+      requestBody:
+        description: 绑定信息
+        required: true
+        content:
+          'application/json':
+            schema:
+              properties:
+                token:
+                  type: string
+                  description: Line ID Token (jwt)
+                userId:
+                  type: integer
+                  format: int32
+                  description: User ID
+      responses:
+        '200':
+          description: 成功
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+
+
+  '/api/auth/line/users':
+    post:
+      tags:
+        - edu-api
+      summary: 使用 line id token 查询所有绑定的用户
+      operationId: users
+      requestBody:
+        description: 绑定信息
+        required: true
+        content:
+          'application/json':
+            schema:
+              properties:
+                token:
+                  type: string
+                  description: Line ID Token (jwt)
+      responses:
+        '200':
+          description: 成功
+          content:
+            'application/json':
+              schema:
+                type: array
+                description: 结果
+                items:
+                  $ref: '#/components/schemas/UserInfo'
+  '/api/line/bind':
+    post:
+      tags:
+        - edu-api
+      summary: 绑定 Line 账号
+      operationId: bind
+      requestBody:
+        description: 绑定信息
+        required: true
+        content:
+          'application/json':
+            schema:
+              properties:
+                token:
+                  type: string
+                  description: Line ID Token (jwt)
+      responses:
+        '200':
+          description: 成功
+
+  '/api/line/unbind':
     put:
       tags:
-        - TaskInfo
-      summary: 根据任务类型Id更新相关信息，包括：名称、描述、优先级、状态等。
-      operationId: updateTask
+        - edu-api
+      summary: 解绑 Line 账号
+      operationId: unbind
+      responses:
+        '200':
+          description: 成功
+
+  '/api/schools':
+    post:
+      tags:
+        - teacher
+      summary: 创建学校
+      operationId: createSchools
       requestBody:
-        description: 任务类型信息
+        description: 绑定信息
         required: true
         content:
           'application/json':
             schema:
-              $ref: '#/components/schemas/Task'
+              properties:
+                name:
+                  type: string
+                  description: 学校名字
       responses:
         '200':
-          description: 返回更新成功的任务类型
+          description: 成功
+    get:
+      tags:
+        - teacher
+      summary: 老师所属学校的列表
+      operationId: schools
+      responses:
+        '200':
+          description: 成功
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Task'
-  '/api/tasks':
-    parameters:
-      - name: page
-        in: query
-        description: 页码
-        schema:
-          type: integer
-          format: int32
-          minimum: 1
-          default: 1
-      - name: size
-        in: query
-        description: 每页数量
-        schema:
-          type: integer
-          format: int32
-          maximum: 100
-          default: 20
+                type: array
+                description: 结果
+                items:
+                  $ref: '#/components/schemas/SchoolInfo'
+
+
+  '/api/schools/{schoolId}/students':
     post:
       tags:
-        - TaskInfo
-      summary: 查询任务类型
-      operationId: getTasks
+        - teacher
+      summary: 老师创建学生账号
+      operationId: createStudents
+      parameters:
+        - name: schoolId
+          in: path
+          required: true
+          description: 学校ID
+          schema:
+            type: integer
+            format: int64
       requestBody:
-        description: 查询条件
-        required: false
+        content:
+          application/*:
+            schema:
+              $ref: '#/components/schemas/UserRegInfo'
+      responses:
+        '200':
+          description: 成功
+
+
+  '/api/schools/students':
+    get:
+      tags:
+        - teacher
+      summary: 老师的学生（老师所属多个学校）
+      operationId: Students
+      responses:
+        '200':
+          description: 成功
+          content:
+            'application/json':
+              schema:
+                type: array
+                description: 结果
+                items:
+                  $ref: '#/components/schemas/StudentInfo'
+
+
+  '/api/schools/{schoolId}/invites':
+    post:
+      tags:
+        - teacher
+      summary: 学校管理员邀请创建老师账号
+      operationId: invites
+      parameters:
+        - name: schoolId
+          in: path
+          required: true
+          description: 学校ID
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/*:
+            schema:
+              $ref: '#/components/schemas/UserRegInfo'
+      responses:
+        '200':
+          description: 成功
+
+  '/api/teachers/students/subscribe':
+    get:
+      tags:
+        - teacher
+      summary: 查看关注自己的学生
+      operationId: subscribe
+      responses:
+        '200':
+          description: 成功
+          content:
+            'application/json':
+              schema:
+                type: array
+                description: 结果
+                items:
+                  $ref: '#/components/schemas/StudentInfo'
+
+  '/api/talk/teacher/{studentId}':
+    post:
+      tags:
+        - teacher
+      summary: 老师给学生发message
+      operationId: teacherTalk
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          description: 学生id
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: 绑定信息
+        required: true
         content:
           'application/json':
             schema:
-              $ref: '#/components/schemas/TaskQuery'
+              properties:
+                content:
+                  type: string
+                  description: 内容
       responses:
         '200':
-          description: 返回分页结果集
+          description: 成功
+
+  '/api/talk/student/{teacherId}':
+    post:
+      tags:
+        - student
+      summary: 学生给老师发message
+      operationId: studentTalk
+      parameters:
+        - name: teacherId
+          in: path
+          required: true
+          description: 老师id
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: 绑定信息
+        required: true
+        content:
+          'application/json':
+            schema:
+              properties:
+                content:
+                  type: string
+                  description: 内容
+      responses:
+        '200':
+          description: 成功
+
+
+  '/api/students/school':
+    get:
+      tags:
+        - student
+      summary: 该学生所在学校的信息
+      operationId: schoolInfo
+      responses:
+        '200':
+          description: 成功
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/TaskPaginator'
+                $ref: '#/components/schemas/SchoolInfo'
+
+  '/api/students/teachers':
+    get:
+      tags:
+        - student
+      summary: 学生所在学校的老师们
+      operationId: teachers
+      responses:
+        '200':
+          description: 成功
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/StudentTeacherInfo'
+
+
+  '/api/students/subscribes':
+    get:
+      tags:
+        - student
+      summary: 学生关注的老师门
+      operationId: subscribes
+      responses:
+        '200':
+          description: 成功
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/StudentTeacherInfo'
+
+  '/api/students/subscribes/{teacherId}':
+    post:
+      tags:
+        - student
+      summary:  关注老师请求接口
+      operationId: subscribes
+      parameters:
+        - name: teacherId
+          in: path
+          required: true
+          description: 老师id
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 成功
+
+
+  '/api/students/unsubscribes/{teacherId}':
+    post:
+      tags:
+        - student
+      summary:  取消关注老师请求接口
+      operationId: deleteSubscribe
+      parameters:
+        - name: teacherId
+          in: path
+          required: true
+          description: 老师id
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 成功
+
 components:
   # security definition
   securitySchemes:
@@ -119,142 +414,92 @@ components:
       in: header
       name: 'Authorization'
   # parameters definition
-  parameters:
-    id:
-      name: taskId
-      required: true
-      in: path
-      description: 任务类型Id
-      schema:
-        type: integer
-        format: int32
-  # schema definition
   schemas:
-    # Task definition
-    Task:
+    StudentTeacherInfo:
       type: object
-      description: 任务类型
-      required:
-        - name
-        - description
-        - sqlExp
+      description: 关注老师Vo
       properties:
         id:
           type: integer
-          format: int32
-          description: 任务类型Id
-          example: 100
+          description: 老师id
         name:
           type: string
-          description: 任务类型名称
-          example: 带看
-        description:
+          description: 老师姓名
+        following:
           type: string
-          description: 任务类型描述
-          example: 待带看任务
-        priority:
-          type: integer
-          format: int32
-          description: 任务类型优先级，1：LOW低；2：MEDIUM中；3：HIGH高
-          example: 2
-          writeOnly: true
-          minimum: 0
-          maximum: 3
-        priorityStr:
-          type: string
-          description: 任务类型优先级，1：LOW低；2：MEDIUM中；3：HIGH高；用来展示 priority 的字面值
-          example: MEDIUM
-          readOnly: true
-        status:
-          type: integer
-          format: int32
-          description: 任务类型状态，1：ENABLED启用；2：DISABLED禁用；3：PAUSED暂停
-          example: 1
-          writeOnly: true
-          minimum: 0
-          maximum: 3
-        statusStr:
-          type: string
-          description: 任务类型状态，1：ENABLED启用；2：DISABLED禁用；3：PAUSED暂停；用来展示 status 的字面值
-          example: ENABLED
-          readOnly: true
-        ref:
-          type: string
-          description: 任务类型关联链接，用于前端操作
-          example: '/path/to/another/page'
-        actions:
-          type: integer
-          format: int32
-          description: 任务类型操作集合，100：PROCEED处理；10：DISMISS忽略；1：POSTPONE推迟；多种操作会合并在一起，比如101代表支持的操作是 PROCEED处理 和 POSTPONE推迟；
-          example: 101
-          minimum: 0
-          maximum: 111
-          writeOnly: true
-        actionsStr:
-          type: array
-          description: 任务类型操作集合，100：PROCEED处理；10：DISMISS忽略；1：POSTPONE推迟；用来展示 actions 的字面值
-          items:
-            type: string
-          minItems: 0
-          maxItems: 3
-          example: ['PROCEED', 'POSTPONE']
-          readOnly: true
-        sqlExp:
-          type: string
-          description: 任务类型SQL表达式
-          example: SELECT a_filed FROM a_table WHERE b_field = ?
-        createdAt:
-          description: 任务类型创建时间
-          type: string
-          format: 'date-time'
-        updatedAt:
-          description: 任务类型修改时间
-          type: string
-          format: 'date-time'
-    # TaskQuery definition
-    TaskQuery:
+          description: 是否关注
+
+    StudentInfo:
       type: object
-      description: 任务类型查询条件
+      description: 学生的Vo
+      properties:
+        id:
+          type: integer
+          description: 学生id
+        name:
+          type: string
+          description: 学生姓名
+        school_name:
+          type: string
+          description: 学校名称
+
+    SchoolInfo:
+      type: object
+      description: 用户信息的Vo
+      properties:
+        id:
+          type: integer
+          description: 学校id
+        name:
+          type: string
+          description: 学校名称
+        approve_at:
+          type: string
+          description: 审批日期
+        created_at:
+          type: string
+          description: 创建日期
+        is_manager:
+          type: string
+          description: 当前user是否为管理员
+
+
+    UserInfo:
+      type: object
+      description: 用户信息的Vo
+      properties:
+        id:
+          type: integer
+          description: 用户id
+        name:
+          type: string
+          description: 姓名
+        access_token:
+          type: string
+          description: access_token
+        expires_at:
+          type: string
+          description: 过期时间
+        lineBinded:
+          type: boolean
+          description: 是否绑定Line
+        role:
+          type: string
+          description: 角色
+    UserRegInfo:
+      type: object
+      description: 用户注册的Vo
+      required:
+        - name
+        - email
+        - password
       properties:
         name:
           type: string
-          description: 任务类型名称关键字
-          example: 带看
-        priority:
-          type: integer
-          format: int32
-          description: 任务类型优先级，0：UNKNOWN未指定；1：LOW低，2：MEDIUM中，3：HIGH高
-          writeOnly: true
-          example: 2
-          minimum: 0
-          maximum: 3
-        status:
-          type: integer
-          format: int32
-          description: 任务类型状态，0：UNKNOWN未指定；1：ENABLED启用，2：DISABLED禁用，3：PAUSED暂停
-          writeOnly: true
-          example: 1
-          minimum: 0
-          maximum: 3
-    # TaskPaginator definition
-    TaskPaginator:
-      type: object
-      description: 任务分页结果
-      properties:
-        currentPage:
-          type: integer
-          format: int32
-          description: 当前页码
-        pageSize:
-          type: integer
-          format: int32
-          description: 每页条数
-        totalCount:
-          type: integer
-          format: int32
-          description: 总数量
-        result:
-          type: array
-          description: 结果
-          items:
-            $ref: '#/components/schemas/Task'
+          description: 姓名
+        email:
+          type: string
+          description: 邮箱
+        password:
+          type: string
+          description: 密码
