@@ -74,6 +74,8 @@ class StudentController extends AdminController
         $form->saving(function (Form $form) {
             if (!empty($form->password)) {
                 $form->password = bcrypt($form->password);
+            } else {
+                $form->password = $form->model()->getAttribute("password");
             }
         });
         return $form;

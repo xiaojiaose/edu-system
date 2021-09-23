@@ -18,9 +18,9 @@ class StudentController extends Controller
     // 关注的老师列表
     public function subscribeList(Request $request)
     {
-        $pageNum = (int)$request->query('pageNum');
+        $pageNumber = (int)$request->query('pageNumber');
 
-        $page = $pageNum > 0 ? $pageNum : 1;
+        $page = $pageNumber > 0 ? $pageNumber : 1;
         $offset = self::PAGE_SIZE * ($page - 1);
 
         $teacherIds = Subscribe::query()
