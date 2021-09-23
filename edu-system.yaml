@@ -352,8 +352,10 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/StudentTeacherInfo'
-
+                type: array
+                description: 结果
+                items:
+                  $ref: '#/components/schemas/StudentTeacherInfo'
 
   '/api/students/subscribes':
     get:
@@ -367,7 +369,10 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/StudentTeacherInfo'
+                type: array
+                description: 结果
+                items:
+                  $ref: '#/components/schemas/StudentTeacherInfo'
 
   '/api/students/subscribes/{teacherId}':
     post:
