@@ -1,0 +1,260 @@
+openapi: 3.0.3
+externalDocs:
+  description: 'Edu System site'
+  url: 'https://edu-docker.herokuapp.com/'
+info:
+  title: Edu System REST API
+  description: Edu System
+  version: 1.0.0-SNAPSHOT
+  contact:
+    name: 孟德维
+    email: mengdewei@gmail.com
+servers:
+  - url: 'https://test-edu-docker.herokuapp.com'
+    description: 生产环境
+tags:
+  - name: edu-api
+    description: 后端接口
+security:
+  - KeyAuth: []
+paths:
+  '/api/task':
+    post:
+      tags:
+        - TaskInfo
+      summary: 新建一种任务类型
+      operationId: createTask
+      requestBody:
+        description: 任务类型
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '201':
+          description: 返回新建的任务类型
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Task'
+  '/api/task/{taskId}':
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags:
+        - TaskInfo
+      summary: 根据任务类型Id查询
+      operationId: getTask
+      responses:
+        '200':
+          description: 返回指定的任务类型
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          description: 指定的任务类型不存在
+    put:
+      tags:
+        - TaskInfo
+      summary: 根据任务类型Id更新相关信息，包括：名称、描述、优先级、状态等。
+      operationId: updateTask
+      requestBody:
+        description: 任务类型信息
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '200':
+          description: 返回更新成功的任务类型
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Task'
+  '/api/tasks':
+    parameters:
+      - name: page
+        in: query
+        description: 页码
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+          default: 1
+      - name: size
+        in: query
+        description: 每页数量
+        schema:
+          type: integer
+          format: int32
+          maximum: 100
+          default: 20
+    post:
+      tags:
+        - TaskInfo
+      summary: 查询任务类型
+      operationId: getTasks
+      requestBody:
+        description: 查询条件
+        required: false
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/TaskQuery'
+      responses:
+        '200':
+          description: 返回分页结果集
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/TaskPaginator'
+components:
+  # security definition
+  securitySchemes:
+    KeyAuth:
+      type: apiKey
+      in: header
+      name: 'Authorization'
+  # parameters definition
+  parameters:
+    id:
+      name: taskId
+      required: true
+      in: path
+      description: 任务类型Id
+      schema:
+        type: integer
+        format: int32
+  # schema definition
+  schemas:
+    # Task definition
+    Task:
+      type: object
+      description: 任务类型
+      required:
+        - name
+        - description
+        - sqlExp
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: 任务类型Id
+          example: 100
+        name:
+          type: string
+          description: 任务类型名称
+          example: 带看
+        description:
+          type: string
+          description: 任务类型描述
+          example: 待带看任务
+        priority:
+          type: integer
+          format: int32
+          description: 任务类型优先级，1：LOW低；2：MEDIUM中；3：HIGH高
+          example: 2
+          writeOnly: true
+          minimum: 0
+          maximum: 3
+        priorityStr:
+          type: string
+          description: 任务类型优先级，1：LOW低；2：MEDIUM中；3：HIGH高；用来展示 priority 的字面值
+          example: MEDIUM
+          readOnly: true
+        status:
+          type: integer
+          format: int32
+          description: 任务类型状态，1：ENABLED启用；2：DISABLED禁用；3：PAUSED暂停
+          example: 1
+          writeOnly: true
+          minimum: 0
+          maximum: 3
+        statusStr:
+          type: string
+          description: 任务类型状态，1：ENABLED启用；2：DISABLED禁用；3：PAUSED暂停；用来展示 status 的字面值
+          example: ENABLED
+          readOnly: true
+        ref:
+          type: string
+          description: 任务类型关联链接，用于前端操作
+          example: '/path/to/another/page'
+        actions:
+          type: integer
+          format: int32
+          description: 任务类型操作集合，100：PROCEED处理；10：DISMISS忽略；1：POSTPONE推迟；多种操作会合并在一起，比如101代表支持的操作是 PROCEED处理 和 POSTPONE推迟；
+          example: 101
+          minimum: 0
+          maximum: 111
+          writeOnly: true
+        actionsStr:
+          type: array
+          description: 任务类型操作集合，100：PROCEED处理；10：DISMISS忽略；1：POSTPONE推迟；用来展示 actions 的字面值
+          items:
+            type: string
+          minItems: 0
+          maxItems: 3
+          example: ['PROCEED', 'POSTPONE']
+          readOnly: true
+        sqlExp:
+          type: string
+          description: 任务类型SQL表达式
+          example: SELECT a_filed FROM a_table WHERE b_field = ?
+        createdAt:
+          description: 任务类型创建时间
+          type: string
+          format: 'date-time'
+        updatedAt:
+          description: 任务类型修改时间
+          type: string
+          format: 'date-time'
+    # TaskQuery definition
+    TaskQuery:
+      type: object
+      description: 任务类型查询条件
+      properties:
+        name:
+          type: string
+          description: 任务类型名称关键字
+          example: 带看
+        priority:
+          type: integer
+          format: int32
+          description: 任务类型优先级，0：UNKNOWN未指定；1：LOW低，2：MEDIUM中，3：HIGH高
+          writeOnly: true
+          example: 2
+          minimum: 0
+          maximum: 3
+        status:
+          type: integer
+          format: int32
+          description: 任务类型状态，0：UNKNOWN未指定；1：ENABLED启用，2：DISABLED禁用，3：PAUSED暂停
+          writeOnly: true
+          example: 1
+          minimum: 0
+          maximum: 3
+    # TaskPaginator definition
+    TaskPaginator:
+      type: object
+      description: 任务分页结果
+      properties:
+        currentPage:
+          type: integer
+          format: int32
+          description: 当前页码
+        pageSize:
+          type: integer
+          format: int32
+          description: 每页条数
+        totalCount:
+          type: integer
+          format: int32
+          description: 总数量
+        result:
+          type: array
+          description: 结果
+          items:
+            $ref: '#/components/schemas/Task'

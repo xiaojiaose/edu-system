@@ -32,18 +32,18 @@ class UserController extends AdminController
             $filter->scope('only-teacher', 'Only Teacher')->where('is_teacher', '>', 0);
         });
 
-        $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('email', __('Email'));
-        $grid->column('password', __('Password'));
-        $grid->column('remember_token', __('Remember token'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-        $grid->column('is_student', __('Is student'))->filter();
-        $grid->column('student_school_id', __('Student school id'));
-        $grid->column('is_teacher', __('Is teacher'));
-        $grid->column('is_system_admin', __('Is system admin'));
-        $grid->column('line_id', __('Line id'));
+        $grid->column('id', 'Id');
+        $grid->column('name', 'Name');
+        $grid->column('email', 'Email');
+        $grid->column('password', 'Password');
+        $grid->column('remember_token', 'Remember token');
+        $grid->column('created_at', 'Created at');
+        $grid->column('updated_at', 'Updated at');
+        $grid->column('is_student', 'Is student')->filter();
+        $grid->column('student_school_id', 'Student school id');
+        $grid->column('is_teacher', 'Is teacher');
+        $grid->column('is_system_admin', 'Is system admin');
+        $grid->column('line_id', 'Line id');
 
         return $grid;
     }
@@ -58,18 +58,18 @@ class UserController extends AdminController
     {
         $show = new Show(User::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('name', __('Name'));
-        $show->field('email', __('Email'));
-        $show->field('password', __('Password'));
-        $show->field('remember_token', __('Remember token'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
-        $show->field('is_student', __('Is student'));
-        $show->field('student_school_id', __('Student school id'));
-        $show->field('is_teacher', __('Is teacher'));
-        $show->field('is_system_admin', __('Is system admin'));
-        $show->field('line_id', __('Line id'));
+        $show->field('id', 'Id');
+        $show->field('name', 'Name');
+        $show->field('email', 'Email');
+        $show->field('password', 'Password');
+        $show->field('remember_token', 'Remember token');
+        $show->field('created_at', 'Created at');
+        $show->field('updated_at', 'Updated at');
+        $show->field('is_student', 'Is student');
+        $show->field('student_school_id', 'Student school id');
+        $show->field('is_teacher', 'Is teacher');
+        $show->field('is_system_admin', 'Is system admin');
+        $show->field('line_id', 'Line id');
 
         return $show;
     }
@@ -83,15 +83,15 @@ class UserController extends AdminController
     {
         $form = new Form(new User());
 
-        $form->text('name', __('Name'));
-        $form->email('email', __('Email'));
-        $form->password('password', __('Password'));
-        $form->text('remember_token', __('Remember token'));
-        $form->datetime('is_student', __('Is student'))->default(date('Y-m-d H:i:s'));
-        $form->number('student_school_id', __('Student school id'));
-        $form->datetime('is_teacher', __('Is teacher'))->default(date('Y-m-d H:i:s'));
-        $form->datetime('is_system_admin', __('Is system admin'))->default(date('Y-m-d H:i:s'));
-        $form->text('line_id', __('Line id'));
+        $form->text('name', 'Name');
+        $form->email('email', 'Email');
+        $form->password('password', 'Password');
+        $form->text('remember_token', 'Remember token');
+        $form->datetime('is_student', 'Is student')->default(date('Y-m-d H:i:s'));
+        $form->number('student_school_id', 'Student school id');
+        $form->datetime('is_teacher', 'Is teacher')->default(date('Y-m-d H:i:s'));
+        $form->datetime('is_system_admin', 'Is system admin')->default(date('Y-m-d H:i:s'));
+        $form->text('line_id', 'Line id');
 
         return $form;
     }
