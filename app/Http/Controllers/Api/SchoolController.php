@@ -75,7 +75,7 @@ class SchoolController extends Controller
                 $studentList = Student::whereSchoolId($schoolId)->whereIsStudent(1)->get();
             } else {
                 $managerSchools = School::whereHas('teachers', function ($query) use ($request) {
-                    $query->where("is_manager", '1')->where('teacher_id', $request->user()->id);
+                    $query->where('teacher_id', $request->user()->id);
                 })->pluck("name","id")->toArray();
 //                dd($managerSchools);
                 $studentList = Student::whereIn('school_id', array_keys($managerSchools))->whereIsStudent(1)->get();
