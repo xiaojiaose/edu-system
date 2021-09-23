@@ -59,7 +59,7 @@ class TeacherController extends AdminController
         $form->email('email', 'Email');
         $form->password('password', 'Password');
         $form->text('remember_token', 'Remember token');
-//        $form->text('line_id', 'Line id');
+        $form->text('line_id', 'Line id');
         $form->saving(function (Form $form) {
             if (!empty($form->password)) {
                 $form->password = bcrypt($form->password);

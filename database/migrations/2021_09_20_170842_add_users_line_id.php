@@ -14,7 +14,7 @@ class AddUsersLineId extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('line_id', 64)->index()->comment('line用户id')->default('');
+            $table->string('line_id', 64)->nullable()->comment('line用户id');
         });
     }
 

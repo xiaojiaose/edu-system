@@ -40,9 +40,8 @@ class UserController extends AdminController
         $grid->column('created_at', 'Created at');
         $grid->column('updated_at', 'Updated at');
         $grid->column('is_student', 'Is student')->filter();
-        $grid->column('student_school_id', 'Student school id');
+        $grid->column('school_id', 'school id');
         $grid->column('is_teacher', 'Is teacher');
-        $grid->column('is_system_admin', 'Is system admin');
         $grid->column('line_id', 'Line id');
 
         return $grid;
@@ -66,9 +65,8 @@ class UserController extends AdminController
         $show->field('created_at', 'Created at');
         $show->field('updated_at', 'Updated at');
         $show->field('is_student', 'Is student');
-        $show->field('student_school_id', 'Student school id');
+        $show->field('school_id', 'school id');
         $show->field('is_teacher', 'Is teacher');
-        $show->field('is_system_admin', 'Is system admin');
         $show->field('line_id', 'Line id');
 
         return $show;
@@ -87,10 +85,9 @@ class UserController extends AdminController
         $form->email('email', 'Email');
         $form->password('password', 'Password');
         $form->text('remember_token', 'Remember token');
-        $form->datetime('is_student', 'Is student')->default(date('Y-m-d H:i:s'));
-        $form->number('student_school_id', 'Student school id');
-        $form->datetime('is_teacher', 'Is teacher')->default(date('Y-m-d H:i:s'));
-        $form->datetime('is_system_admin', 'Is system admin')->default(date('Y-m-d H:i:s'));
+        $form->number('is_student', 'Is student');
+        $form->number('school_id', 'school id');
+        $form->number('is_teacher', 'Is teacher');
         $form->text('line_id', 'Line id');
 
         return $form;

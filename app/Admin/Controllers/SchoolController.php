@@ -16,7 +16,9 @@ class SchoolController extends AdminController
 
     protected function grid()
     {
+
         $grid = new Grid(new School());
+        $grid->disableCreateButton();
 
         $grid->column('id', 'Id');
         $grid->column('name', 'Name');
@@ -54,7 +56,12 @@ class SchoolController extends AdminController
         $form->text('name', 'Name');
         $form->text('approve_name', 'Approve Name')->default($user->name)->readonly();
         $form->datetime('approve_time', 'Approve time')->default(date('Y-m-d H:i:s'));
-        $form->text('creator.name', 'Creator')->readonly();
+        $form->saving(function (Form $form) use ($user) {
+            if (empty($form->model()->getAttribute("creator_id"))) {
+                $form->model()->setAttribute("creator_id", $user->id);
+            }
+        });
+
         return $form;
     }
 }
