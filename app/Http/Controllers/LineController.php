@@ -19,7 +19,7 @@ class LineController
         $url .= http_build_query([
             'response_type' => 'code',
             'client_id' => config('services.line.channel_id'),
-            'redirect_uri' => "https://edu-docker.herokuapp.com/callback/line",
+            'redirect_uri' => "https://edu-hebei.herokuapp.com/callback/line",
             'state' => Str::random(8),
             'scope' => 'profile openid',
         ]);
@@ -39,7 +39,7 @@ class LineController
             'form_params' => [
                 'grant_type' => 'authorization_code',
                 'code' => $request->query('code'),
-                'redirect_uri' => "https://edu-docker.herokuapp.com/callback/line",
+                'redirect_uri' => "https://edu-hebei.herokuapp.com/callback/line",
                 'client_id' => config('services.line.channel_id'),
                 'client_secret' => config('services.line.channel_secret'),
             ]
