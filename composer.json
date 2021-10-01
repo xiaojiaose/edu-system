@@ -5,7 +5,9 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=7.3.0",
+        "php": "7.3.*",
+        "ext-pgsql": "*",
+        "ext-sockets": "*",
         "barryvdh/laravel-ide-helper": "^2.8",
         "encore/laravel-admin": "1.8",
         "fideloper/proxy": "~3.3",
@@ -27,6 +29,9 @@
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files": [
+            "bootstrap/helpers.php"
         ],
         "psr-4": {
             "App\\": "app/"
