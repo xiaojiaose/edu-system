@@ -1,4 +1,4 @@
-# front-end
+# web
 
 ## Project setup
 ```
@@ -19,6 +19,8 @@ yarn build
 ```
 yarn lint
 ```
+### heroku 部署参考
+see https://www.travisluong.com/how-to-deploy-a-vue-js-app-to-heroku/
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

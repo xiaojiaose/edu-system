@@ -1,7 +1,7 @@
 openapi: 3.0.3
 externalDocs:
   description: 'Edu System site'
-  url: 'https://edu-docker.herokuapp.com/'
+  url: 'https://edu-hebei.herokuapp.com/'
 info:
   title: Edu System REST API
   description: Edu System
@@ -10,7 +10,7 @@ info:
     name: 孟德维
     email: mengdewei@gmail.com
 servers:
-  - url: 'https://edu-docker.herokuapp.com'
+  - url: 'https://edu-hebei.herokuapp.com'
     description: 生产环境
 tags:
   - name: edu-api

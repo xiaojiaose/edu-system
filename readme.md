@@ -1,6 +1,8 @@
 # edu-system
 
 *- 项目地址：<https://edu-hebei-front.herokuapp.com/>
+  - 前后端分离分开部署
+    - [web](web) 前端代码
   - 测试账号，密码均为 `123456`
     - wang-school@163.com 
     - zhang-teacher@163.com 
