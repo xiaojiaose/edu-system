@@ -9,6 +9,13 @@ use App\User;
 
 class UserDto implements \JsonSerializable
 {
+    public $access_token;
+    public $expires_at;
+    public $id;
+    public $name;
+    public $role;
+    public $lineBinded = false;
+
     public function __construct(User $user, string $access_token, int $expires_at)
     {
         $this->id = $user->id;
@@ -20,12 +27,7 @@ class UserDto implements \JsonSerializable
         Teacher::checkRole($user) && $this->role = 'teacher';
         Student::checkRole($user) && $this->role = 'student';
     }
-    public $access_token;
-    public $expires_at;
-    public $id;
-    public $name;
-    public $role;
-    public $lineBinded = false;
+
 
     public function jsonSerialize()
     {
