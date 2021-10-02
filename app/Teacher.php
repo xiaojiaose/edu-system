@@ -15,11 +15,12 @@ namespace App;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $is_student 不等于0时为学生
- * @property int $school_id 所属学校
+ * @property int $school_id  所属学校
  * @property int $is_teacher 不等于0时为老师
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
  * @property-read int|null $clients_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[]
+ *                $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\School[] $schools
  * @property-read int|null $schools_count
@@ -42,7 +43,7 @@ namespace App;
  * @method static \Illuminate\Database\Eloquent\Builder|Teacher whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Teacher  extends User
+class Teacher extends User
 {
     static $roleColumn = 'is_teacher';
 

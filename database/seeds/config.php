@@ -17,12 +17,22 @@ return [
     ],
 
     SchoolSeeder::class => [
-        ['name' => '清华大学', '@teachers' => ['wang-teacher@163.com'], '@managers' => ['wang-school@163.com'], '@creator' => 'wang-school@163.com'],
-        ['name' => '北京大学', '@teachers' => ['wang-teacher@163.com', 'zhang-teacher@163.com'], '@managers' => ['wang-school@163.com'], '@creator' => 'wang-school@163.com'],
+        [
+            'name' => '清华大学',
+            '@teachers' => ['wang-teacher@163.com'],
+            '@managers' => ['wang-school@163.com'],
+            '@creator' => 'wang-school@163.com'
+        ],
+        [
+            'name' => '北京大学',
+            '@teachers' => ['wang-teacher@163.com', 'zhang-teacher@163.com'],
+            '@managers' => ['wang-school@163.com'],
+            '@creator' => 'wang-school@163.com'
+        ],
         ['name' => '南京大学', '@teachers' => ['zhang-teacher@163.com']],
         [
             'name' => '复旦大学',
-            '@teachers' => ['zhang-teacher@163.com','wang-school@163.com'],
+            '@teachers' => ['zhang-teacher@163.com', 'wang-school@163.com'],
             '@managers' => ['wang-school@163.com'],
             '@creator' => 'wang-school@163.com',
         ],

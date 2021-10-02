@@ -4,12 +4,14 @@ namespace App;
 
 
 use Illuminate\Database\Eloquent\Model;
+
 // 学校和老师的映射表
+
 /**
  * App\SchoolTeacher
  *
  * @property int $id
- * @property int $school_id 学校id
+ * @property int $school_id  学校id
  * @property int $teacher_id 教师id
  * @property int $is_manager 1为学校管理员
  * @property \Illuminate\Support\Carbon|null $created_at

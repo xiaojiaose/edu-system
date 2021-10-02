@@ -14,7 +14,6 @@ use App\Student;
 use App\Teacher;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
 class SchoolController extends Controller
 {
@@ -76,7 +75,7 @@ class SchoolController extends Controller
             } else {
                 $managerSchools = School::whereHas('teachers', function ($query) use ($request) {
                     $query->where('teacher_id', $request->user()->id);
-                })->pluck("name","id")->toArray();
+                })->pluck("name", "id")->toArray();
 //                dd($managerSchools);
                 $studentList = Student::whereIn('school_id', array_keys($managerSchools))->whereIsStudent(1)->get();
             }

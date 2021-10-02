@@ -10,6 +10,15 @@ use Illuminate\Notifications\Notification;
 class SiteMsgNotify extends Notification
 {
     use Queueable;
+
+    /**
+     * @var string
+     */
+    private $content;
+    /**
+     * @var string
+     */
+    private $time;
     /**
      * Create a new notification instance.
      *
@@ -20,14 +29,6 @@ class SiteMsgNotify extends Notification
         $this->content = $content;
         $this->time = Carbon::now()->toDateTimeString();
     }
-    /**
-     * @var string
-     */
-    private $content;
-    /**
-     * @var string
-     */
-    private $time;
 
     /**
      * Get the notification's delivery channels.
