@@ -17,31 +17,6 @@ namespace App;
  * @property int $is_student 不等于0时为学生
  * @property int $school_id  所属学校
  * @property int $is_teacher 不等于0时为老师
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
- * @property-read int|null $clients_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[]
- *                $notifications
- * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\School[] $schools
- * @property-read int|null $schools_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Student[] $subscribe_students
- * @property-read int|null $subscribe_students_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
- * @property-read int|null $tokens_count
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher query()
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher whereIsStudent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher whereIsTeacher($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher whereSchoolId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Teacher whereUpdatedAt($value)
- * @mixin \Eloquent
  */
 class Teacher extends User
 {

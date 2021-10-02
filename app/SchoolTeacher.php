@@ -16,16 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $is_manager 1为学校管理员
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|SchoolTeacher newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SchoolTeacher newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|SchoolTeacher query()
- * @method static \Illuminate\Database\Eloquent\Builder|SchoolTeacher whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SchoolTeacher whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SchoolTeacher whereIsManager($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SchoolTeacher whereSchoolId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SchoolTeacher whereTeacherId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|SchoolTeacher whereUpdatedAt($value)
- * @mixin \Eloquent
  */
 class SchoolTeacher extends Model
 {
