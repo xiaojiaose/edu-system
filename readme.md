@@ -3,6 +3,7 @@
 *- 项目地址：<https://edu-hebei-front.herokuapp.com/>
   - 前后端分离分开部署
     - [web](web) 前端代码
+    - ./vendor/bin/phpcbf --standard=PSR2 
   - 测试账号，密码均为 `123456`
     - wang-school@163.com 
     - zhang-teacher@163.com 
@@ -16,7 +17,7 @@
 
 
 ## 项目提供了两种构建方式
-- 本项目采用：基于heroku 提供的 <https://devcenter.heroku.com/articles/getting-started-with-laravel> Getting Started with Laravel on Heroku， 集成的PostgreSQL。状态可持续
+- (本项目采用 * )基于heroku 提供的 <https://devcenter.heroku.com/articles/getting-started-with-laravel> Getting Started with Laravel on Heroku， 集成的PostgreSQL。状态可持续
 - 基于docker的 用的sqlite的数据库，弊端每次构建数据库都会重置 状态非持续
 
 ## todo
