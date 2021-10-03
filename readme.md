@@ -19,7 +19,7 @@
 ## 项目提供了两种构建方式
 - (本项目采用 * )基于heroku 提供的 <https://devcenter.heroku.com/articles/getting-started-with-laravel> Getting Started with Laravel on Heroku， 集成的PostgreSQL。状态可持续
 - 基于docker的 用的sqlite的数据库，弊端每次构建数据库都会重置 状态非持续
-
+- .env 走的heroku环境变量
 ## todo
 
 - 前端调用接口时缺少 loading 提示
