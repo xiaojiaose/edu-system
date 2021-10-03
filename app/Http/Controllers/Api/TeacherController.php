@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Api;
 
-
 use App\Http\Controllers\Api\Payload\ToDto;
 use App\Http\Controllers\Controller;
 use App\Student;
@@ -29,6 +28,5 @@ class TeacherController extends Controller
 
     public function list(Request $request)
     {
-
     }
 }

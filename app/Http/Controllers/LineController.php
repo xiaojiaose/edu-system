@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers;
 
-
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -48,5 +47,4 @@ class LineController
         logger(__METHOD__, $data);
         return redirect(config('app.frontend_url') . "?token={$data['id_token']}#/line");
     }
-
 }

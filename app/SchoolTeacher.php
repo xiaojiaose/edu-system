@@ -2,7 +2,6 @@
 // mengdewei@dankegongyu.com
 namespace App;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 // 学校和老师的映射表

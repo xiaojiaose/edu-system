@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Api;
 
-
 use App\Http\Controllers\Api\Payload\ErrorMessage;
 use App\Http\Controllers\Api\Payload\ToDto;
 use App\Http\Controllers\Controller;
@@ -31,7 +30,6 @@ class StudentController extends Controller
             ->findMany($teacherIds, ['id', 'name', 'email', 'created_at']);
 
         return ToDto::teachersList($teachers);
-
     }
 
     // 关注
@@ -81,7 +79,5 @@ class StudentController extends Controller
         $subscribeTeacherIds = Subscribe::whereStudentId($student->id)->pluck('teacher_id')->all();
 
         return ToDto::teachersList($teachers, $subscribeTeacherIds);
-
     }
-
 }

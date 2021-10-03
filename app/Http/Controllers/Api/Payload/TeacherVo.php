@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Api\Payload;
 
-
 class TeacherVo
 {
     public $teachers = [];

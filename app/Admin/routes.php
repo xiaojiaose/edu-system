@@ -16,6 +16,4 @@ Route::group([
     $router->resource('edu/schools', 'SchoolController');
     $router->resource('edu/users', 'UserController');
     $router->resource('edu/teachers', 'TeacherController');
-
-
 });

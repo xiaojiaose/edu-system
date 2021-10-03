@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class Subscribe extends Model
@@ -23,5 +22,4 @@ class Subscribe extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
-
 }

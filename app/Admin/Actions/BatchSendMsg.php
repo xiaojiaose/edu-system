@@ -38,7 +38,6 @@ class BatchSendMsg extends BatchAction
             }
             $line = new LineService();
             $line->multicastTextMessage($lineIds, $content);
-
         }
 
         return $this->response()->success('Success message...')->refresh();
@@ -53,5 +52,4 @@ class BatchSendMsg extends BatchAction
         $this->select('type', '类型')->options($type)->value(1);
         $this->textarea('content', '内容')->rules('required');
     }
-
 }

@@ -47,5 +47,4 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/students/unsubscribes/{teacherId}', 'Api\StudentController@deleteSubscribe');
         Route::post('/talk/student/{teacherId}', 'Api\TalkMsgController@studentTalk');
     });
-
 });

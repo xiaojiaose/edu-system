@@ -10,7 +10,6 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-
 class LineController extends Controller
 {
     public function bind(Request $request, LineService $line)

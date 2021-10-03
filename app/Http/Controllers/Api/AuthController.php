@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Api;
 
-
 use App\Http\Controllers\Api\Payload\ErrorMessage;
 use App\Http\Controllers\Api\Payload\UserDto;
 use App\Http\Controllers\Controller;

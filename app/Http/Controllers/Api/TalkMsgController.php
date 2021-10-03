@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Api;
 
-
 use App\Events\ChatEvent;
 use App\Events\ChatMsgBroadcastEvent;
 use App\Http\Controllers\Controller;

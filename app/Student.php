@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 /**
  * App\Student
  *
@@ -26,5 +25,4 @@ class Student extends User
     {
         return $this->belongsTo(School::class, 'school_id');
     }
-
 }
